@@ -2,8 +2,16 @@ name: Enviar Resumo Diário da Agenda para o Slack
 
 on:
   schedule:
-    - cron: '30 10,14,20 * * 1-5'
-    - cron: '00 17 * * 1-5'
+    # O agendamento (cron) do GitHub Actions usa o fuso horário UTC.
+    # O horário de Brasília (BRT) é UTC-3.
+
+    # Roda às 10:30, 14:30 e 20:30 UTC de Segunda a Sexta.
+    # Corresponde a 07:30, 11:30 e 17:30 no horário de Brasília.
+    - cron: '30 10,14 * * 1-5'
+
+    # Roda às 17:00 UTC de Segunda a Sexta.
+    # Corresponde a 14:00 no horário de Brasília.
+    - cron: '00 17,20 * * 1-5'
   workflow_dispatch:
 
 jobs:
