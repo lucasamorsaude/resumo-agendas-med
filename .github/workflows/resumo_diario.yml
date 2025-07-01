@@ -1,0 +1,33 @@
+name: Enviar Resumo Diário da Agenda para o Slack
+
+on:
+  schedule:
+    - cron: '30 10,14,20 * * 1-5'
+    - cron: '00 17 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  enviar-resumo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas
+
+      - name: Executar script para enviar resumo
+        env:
+          API_COOKIE: ${{ secrets.API_COOKIE }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          AMEI_USERNAME: ${{ secrets.AMEI_USERNAME }}
+          AMEI_PASSWORD: ${{ secrets.AMEI_PASSWORD }}
+        run: python enviar_resumo_agenda.py
