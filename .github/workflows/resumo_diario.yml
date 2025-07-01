@@ -30,4 +30,4 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
           AMEI_USERNAME: ${{ secrets.AMEI_USERNAME }}
           AMEI_PASSWORD: ${{ secrets.AMEI_PASSWORD }}
-        run: python enviar_resumo_agenda.py
+        run: python app.py
